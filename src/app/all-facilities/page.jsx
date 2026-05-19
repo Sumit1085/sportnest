@@ -82,7 +82,7 @@ const AllFacilityPage = async () => {
 
                                     {/* Button */}
                                     <button className="w-full mt-4 bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition">
-                                        <Link href={`/all-facilies/${facility._id}`}>Book Now</Link>
+                                        <Link href={`/all-facilities/${facility._id}`}>Book Now</Link>
                                     </button>
                                 </div>
                             </div>

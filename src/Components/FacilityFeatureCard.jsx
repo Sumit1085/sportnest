@@ -49,20 +49,14 @@ const FacilityFeatureCard = async () => {
                   {/* Tags */}
                 
 
-                  {/* Button */}
-                  <button className="w-full mt-4 bg-orange-600 text-white py-2 rounded-lg font-medium hover:bg-orange-700 transition">
-                    Book Now
-                  </button>
+                  
                 </div>
               </div>
             ))}
-   
+        
+
     </div>
   );
 };
 
 export default FacilityFeatureCard;
-
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-           
-          </div>

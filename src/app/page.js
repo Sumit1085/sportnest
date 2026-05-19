@@ -70,6 +70,7 @@ export default function Home() {
 
          
           <div ><FacilityFeatureCard/></div>
+            
           <div ><ChooseUs/></div>
           <div ><Testimonial/></div>
         </section>
