@@ -3,7 +3,7 @@ import React from 'react';
 
 const Header = () => {
     return (
-        <div>
+        <div className='sticky top-0 z-50 bg-white shadow-md'>
             <nav className="flex items-center justify-between px-10 py-5 bg-white text-black">
                 {/* Logo */}
                 <div className="text-2xl font-extrabold">
@@ -19,7 +19,7 @@ const Header = () => {
                         Home
                     </Link>
 
-                    <Link href="#" className="hover:text-orange-500 transition">
+                    <Link href="/all-facilities" className="hover:text-orange-500 transition">
                         All Facilities
                     </Link>
                     <Link href="#" className="hover:text-orange-500 transition">

@@ -11,7 +11,7 @@ const FacilityFeatureCard = async () => {
   console.log(limitedDatas);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-30 w-full" >
       {limitedDatas.map((data) => (
         
               <div
@@ -21,8 +21,8 @@ const FacilityFeatureCard = async () => {
                 {/* Image */}
                 <div className="relative h-44 w-full">
                   <Image
-                    src={data.image}
-                    alt={data.title}
+                    src={data.thumbnail}
+                    alt={data.name}
                     fill
                     className="object-cover"
                   />

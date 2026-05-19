@@ -2,14 +2,16 @@ import Image from "next/image";
 import coverImg from '../../public/Container.png'
 import Header from "@/Components/Header";
 import FacilityFeatureCard from "@/Components/FacilityFeatureCard";
+import Testimonial from "@/Components/Testimonial";
+import ChooseUs from "@/Components/ChooseUs";
 
 export default function Home() {
   return (
     <>
       <main className="min-h-screen  text-white">
-        {/* Navbar */}
+       
 
-        <Header />
+        
 
         {/* Hero Section */}
         <section className="relative h-[90vh] w-full overflow-hidden">
@@ -66,8 +68,10 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Grid */}
+         
           <div ><FacilityFeatureCard/></div>
+          <div ><ChooseUs/></div>
+          <div ><Testimonial/></div>
         </section>
       </main>
     </>
