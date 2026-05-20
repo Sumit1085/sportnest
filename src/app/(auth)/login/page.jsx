@@ -1,7 +1,10 @@
 // app/login/page.jsx
-
+ "use client"
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import {
   MdMail,
@@ -11,6 +14,27 @@ import {
 } from "react-icons/md";
 
 export default function LoginPage() {
+  const router = useRouter()
+  const handleLogin = async (e) => {
+    e.preventDefault()
+
+    const formData = new FormData(e.currentTarget)
+
+    const loginData = Object.fromEntries(formData.entries())
+    const {  Email, Password} = loginData
+    console.log(loginData)
+
+    const { data, error } = await authClient.signIn.email({
+    email: Email, // required
+    password: Password, // required
+    callbackURL: "/",
+});
+
+    if (error) {
+      toast.error('Registration Failed')
+    }
+    router.push('/')
+  }
   return (
     <main className="min-h-screen flex flex-col md:flex-row bg-[#0b1426] text-white overflow-hidden">
 
@@ -75,7 +99,7 @@ export default function LoginPage() {
           </div>
 
           {/* FORM */}
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
 
             {/* Email */}
             <div>
@@ -87,6 +111,7 @@ export default function LoginPage() {
                 <MdMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 
                 <input
+                name="Email"
                   type="email"
                   placeholder="name@example.com"
                   className="w-full bg-white/10 border border-white/10 focus:border-orange-500 outline-none rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-gray-500"
@@ -101,13 +126,14 @@ export default function LoginPage() {
                   Password
                 </label>
 
-                
+
               </div>
 
               <div className="relative">
                 <MdLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 
                 <input
+                name="Password"
                   type="password"
                   placeholder="••••••••"
                   className="w-full bg-white/10 border border-white/10 focus:border-orange-500 outline-none rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-gray-500"
