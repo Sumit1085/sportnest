@@ -32,11 +32,14 @@ const Header = () => {
 
                 {/* Right Side */}
                 <div className="flex items-center gap-5 text-sm">
-                    <button className="hover:text-orange-500 transition">Login</button>
-
-                    <div className="w-7 h-7 rounded-full border border-black flex items-center justify-center">
-                        <span className="text-xs">◎</span>
-                    </div>
+                    <Link href={'/login'}><button className="bg-orange-500 text-white hover:bg-orange-600 transition px-8 py-3 rounded-md font-semibold">
+                        Login
+                    </button></Link>
+                    <Link href={'/register'}><button className="bg-orange-500 text-white hover:bg-orange-600 transition px-8 py-3 rounded-md font-semibold">
+                        Registration
+                    </button>
+</Link>
+                  
                 </div>
             </nav>
         </div>

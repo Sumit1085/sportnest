@@ -3,6 +3,7 @@
 import { CiLocationOn } from "react-icons/ci";
 
 export default function FacilityDetails({ facility }) {
+    console.log(facility)
     return (
         <div>
             <div className="flex flex-wrap gap-3 mb-4">
