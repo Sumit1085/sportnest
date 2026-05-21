@@ -33,6 +33,9 @@ export default function LoginPage() {
     if (error) {
       toast.error('Registration Failed')
     }
+
+    const { data:tokenData } = await authClient.token()
+    console.log(tokenData)
     router.push('/')
   }
   return (

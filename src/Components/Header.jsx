@@ -140,11 +140,11 @@ const Header = () => {
                         All Facilities
                     </Link>
 
-                    <Link href="#" onClick={() => setMenuOpen(false)}>
+                    <Link href="/my-bookings" onClick={() => setMenuOpen(false)}>
                         My Bookings
                     </Link>
 
-                    <Link href="#" onClick={() => setMenuOpen(false)}>
+                    <Link href="/manage-facilities" onClick={() => setMenuOpen(false)}>
                         Manage Facilities
                     </Link>
 

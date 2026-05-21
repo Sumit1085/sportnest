@@ -14,7 +14,6 @@ const AllFacilityPage = async () => {
     // const [search, setSearch] = useState('');
 
 
-    console.log(facilities)
     return (
         <div>
             <div className="min-h-screen bg-[#F4F4F7] px-4 md:px-8 py-10">
