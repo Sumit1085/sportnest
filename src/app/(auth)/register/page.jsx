@@ -21,28 +21,67 @@ import toast from "react-hot-toast";
 export default function RegisterPage() {
 
     const router = useRouter()
+    
     const handleRegister = async(e) => {
         e.preventDefault()
 
         const formData = new FormData(e.currentTarget)
-
         const registerData = Object.fromEntries(formData.entries())
         const {Name, Email, Password, imageURL} = registerData
-        console.log(Name)
 
-        const { data, error } = await authClient.signUp.email({
-            name:Name, // required
-            email: Email, // required
-            password: Password, // required
-            image: imageURL,
-            
-        });
-
-        if(error){
-            toast.error('Registration Failed')
+        if (!Name || !Email || !Password) {
+            toast.error('Please fill in all required fields.')
+            return
         }
-        router.push('/')
+
+        // PASSWORD VALIDATION
+        if (Password.length < 6) {
+            toast.error('Password must be at least 6 characters long.')
+            return
+        }
+        if (!/[A-Z]/.test(Password)) {
+            toast.error('Password must contain at least one uppercase letter.')
+            return
+        }
+        if (!/[a-z]/.test(Password)) {
+            toast.error('Password must contain at least one lowercase letter.')
+            return
+        }
+
+        try {
+            const { data, error } = await authClient.signUp.email({
+                name: Name,
+                email: Email,
+                password: Password,
+                image: imageURL || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200",
+                callbackURL: "/login"
+            });
+
+            if (error) {
+                toast.error(error.message || 'Registration Failed')
+                return
+            }
+
+            toast.success('Registration successful! Please login.')
+            router.push('/login')
+        } catch (err) {
+            console.error(err)
+            toast.error('An unexpected error occurred during registration')
+        }
     }
+
+    const handleGoogleSignUp = async () => {
+        try {
+            await authClient.signIn.social({
+                provider: "google",
+                callbackURL: "/"
+            })
+        } catch (err) {
+            console.error(err)
+            toast.error('Google signup failed')
+        }
+    }
+
     return (
         <main className="min-h-screen flex flex-col md:flex-row bg-[#f8f9ff] text-[#0b1c30]">
 
@@ -147,6 +186,7 @@ export default function RegisterPage() {
                                     type="text"
                                     placeholder="John Doe"
                                     className="w-full bg-white border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none rounded-2xl py-4 pl-12 pr-4 transition-all"
+                                    required
                                 />
                             </div>
                         </div>
@@ -165,6 +205,7 @@ export default function RegisterPage() {
                                     type="email"
                                     placeholder="name@example.com"
                                     className="w-full bg-white border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none rounded-2xl py-4 pl-12 pr-4 transition-all"
+                                    required
                                 />
                             </div>
                         </div>
@@ -201,6 +242,7 @@ export default function RegisterPage() {
                                     type="password"
                                     placeholder="••••••••"
                                     className="w-full bg-white border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none rounded-2xl py-4 pl-12 pr-4 transition-all"
+                                    required
                                 />
                             </div>
 
@@ -217,7 +259,7 @@ export default function RegisterPage() {
                         {/* Register Button */}
                         <button
                             type="submit"
-                            className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition-all active:scale-95"
+                            className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
                         >
                             Register
                             <MdArrowForward className="text-xl" />
@@ -237,7 +279,8 @@ export default function RegisterPage() {
                         {/* Google Button */}
                         <button
                             type="button"
-                            className="w-full border-2 border-black hover:bg-gray-100 transition-all rounded-full py-4 font-medium flex items-center justify-center gap-3"
+                            onClick={handleGoogleSignUp}
+                            className="w-full border-2 border-black hover:bg-gray-100 transition-all rounded-full py-4 font-medium flex items-center justify-center gap-3 cursor-pointer"
                         >
                             <FcGoogle className="text-2xl" />
                             Google Sign Up
