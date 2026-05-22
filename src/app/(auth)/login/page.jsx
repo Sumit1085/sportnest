@@ -3,7 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import {
@@ -15,29 +15,53 @@ import {
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const callback = searchParams.get("callback") || "/"
+
   const handleLogin = async (e) => {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
-
     const loginData = Object.fromEntries(formData.entries())
-    const {  Email, Password} = loginData
-    console.log(loginData)
+    const { Email, Password } = loginData
 
-    const { data, error } = await authClient.signIn.email({
-    email: Email, // required
-    password: Password, // required
-    callbackURL: "/",
-});
-
-    if (error) {
-      toast.error('Registration Failed')
+    if (!Email || !Password) {
+      toast.error('Please fill in all fields')
+      return
     }
 
-    const { data:tokenData } = await authClient.token()
-    console.log(tokenData)
-    router.push('/')
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email: Email,
+        password: Password,
+        callbackURL: callback,
+      })
+
+      if (error) {
+        toast.error(error.message || 'Login Failed. Check your email or password.')
+        return
+      }
+
+      toast.success('Logged in successfully!')
+      router.push(callback)
+    } catch (err) {
+      console.error(err)
+      toast.error('An unexpected error occurred during login')
+    }
   }
+
+  const handleGoogleLogin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: callback
+      })
+    } catch (err) {
+      console.error(err)
+      toast.error('Google sign in failed')
+    }
+  }
+
   return (
     <main className="min-h-screen flex flex-col md:flex-row bg-[#0b1426] text-white overflow-hidden">
 
@@ -147,7 +171,7 @@ export default function LoginPage() {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-orange-600 hover:bg-orange-700 transition-all duration-200 rounded-full py-4 font-semibold flex items-center justify-center gap-2 active:scale-95"
+              className="w-full bg-orange-600 hover:bg-orange-700 transition-all duration-200 rounded-full py-4 font-semibold flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
             >
               Login
               <MdLogin className="text-xl" />
@@ -163,7 +187,8 @@ export default function LoginPage() {
             {/* Google Button */}
             <button
               type="button"
-              className="w-full border border-white/10 hover:bg-white/5 transition-all rounded-full py-4 font-medium flex items-center justify-center gap-3"
+              onClick={handleGoogleLogin}
+              className="w-full border border-white/10 hover:bg-white/5 transition-all rounded-full py-4 font-medium flex items-center justify-center gap-3 cursor-pointer"
             >
               <FcGoogle className="text-2xl" />
               Login with Google
