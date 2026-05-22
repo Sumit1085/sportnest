@@ -32,7 +32,7 @@ const Header = () => {
                         Home
                     </Link>
 
-                    <Link href="/all-facilities" className="hover:text-orange-500 transition">
+                     <Link href="/all-facilities" className="hover:text-orange-500 transition">
                         All Facilities
                     </Link>
 
@@ -180,7 +180,7 @@ const Header = () => {
                                     </button>
                                 </Link>
 
-                                <Link href="/register" className="w-full" onClick={() => setMenuOpen(false)}>
+                                 <Link href="/register" className="w-full" onClick={() => setMenuOpen(false)}>
                                     <button className="border border-orange-500 text-orange-500 px-4 py-2 rounded-md w-full cursor-pointer">
                                         Register
                                     </button>

@@ -1,5 +1,5 @@
 import dns from 'node:dns'
-dns.setServers(['8.8.8.8' , '8.8.4.4'])
+dns.setServers(['8.8.8.8', '8.8.4.4'])
 
 
 import { Geist, Geist_Mono } from "next/font/google";
@@ -7,7 +7,9 @@ import "./globals.css";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import { Toaster } from "react-hot-toast";
+// import { HeroUIProvider } from "@heroui/react";
 import { HeroUIProvider } from "@heroui/react";
+import { NextUIProvider } from "@heroui/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,10 +34,12 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full flex flex-col bg-[#F4F4F7]">
         <HeroUIProvider>
-          <Header/>
-          <main className="flex-grow">{children}</main>
+          <Header />
+          <main className="flex-grow"><NextUIProvider>
+            {children}
+          </NextUIProvider></main>
           <Toaster position="top-center" reverseOrder={false} />
-          <Footer/>
+          <Footer />
         </HeroUIProvider>
       </body>
     </html>

@@ -1,22 +1,18 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CiLocationOn, CiSearch } from 'react-icons/ci';
 import { MdFilterList, MdOutlineSports, MdAttachMoney, MdOutlineArrowDropDown } from 'react-icons/md';
 import { Spinner } from '@heroui/react';
-
 export default function AllFacilityPage() {
     const [facilities, setFacilities] = useState([]);
     const [filteredFacilities, setFilteredFacilities] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     // Search and filter states
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedType, setSelectedType] = useState("All");
     const [sortBy, setSortBy] = useState("default");
-
     useEffect(() => {
         const loadFacilities = async () => {
             try {
@@ -36,11 +32,9 @@ export default function AllFacilityPage() {
         };
         loadFacilities();
     }, []);
-
     // Handle searching, filtering, and sorting
     useEffect(() => {
         let result = [...facilities];
-
         // 1. Search filter
         if (searchTerm.trim() !== "") {
             const query = searchTerm.toLowerCase();
@@ -49,12 +43,10 @@ export default function AllFacilityPage() {
                      f.location.toLowerCase().includes(query)
             );
         }
-
         // 2. Type filter
         if (selectedType !== "All") {
             result = result.filter(f => f.type === selectedType);
         }
-
         // 3. Sorting
         if (sortBy === "price-low") {
             result.sort((a, b) => parseFloat(a.price_per_hour) - parseFloat(b.price_per_hour));
@@ -63,12 +55,9 @@ export default function AllFacilityPage() {
         } else if (sortBy === "capacity") {
             result.sort((a, b) => parseInt(b.capacity) - parseInt(a.capacity));
         }
-
-        setFilteredFacilities(result);
+        // setFilteredFacilities(result);
     }, [searchTerm, selectedType, sortBy, facilities]);
-
     const facilityTypes = ["All", "Football Turf", "Badminton Court", "Swimming Lane", "Tennis Court", "Basketball Court", "Cricket Net"];
-
     return (
         <div className="min-h-screen bg-[#F4F4F7] px-4 md:px-8 py-12">
             <div className="max-w-7xl mx-auto">
@@ -82,12 +71,11 @@ export default function AllFacilityPage() {
                         Browse premium arenas, professional-grade turf, and competitive venues curated for elite athletes.
                     </p>
                 </div>
-
                 {/* Filters Section */}
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 mb-8 flex flex-col lg:flex-row gap-4 items-stretch lg:items-center">
                     
                     {/* Search Input */}
-                    <div className="relative flex-grow">
+                    <div className="relative grow">
                         <CiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl font-bold" />
                         <input
                             type="text"
@@ -97,9 +85,8 @@ export default function AllFacilityPage() {
                             className="w-full bg-gray-50 border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none rounded-2xl py-3.5 pl-12 pr-4 text-black text-sm transition-all"
                         />
                     </div>
-
                     {/* Filter Type */}
-                    <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
+                    <div className="flex flex-col sm:flex-row gap-4 shrink-0">
                         <div className="relative">
                             <select
                                 value={selectedType}
@@ -112,7 +99,6 @@ export default function AllFacilityPage() {
                             </select>
                             <MdOutlineSports className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none" />
                         </div>
-
                         {/* Sort */}
                         <div className="relative">
                             <select
@@ -128,9 +114,7 @@ export default function AllFacilityPage() {
                             <MdAttachMoney className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none" />
                         </div>
                     </div>
-
                 </div>
-
                 {/* Facilities Grid */}
                 {isLoading ? (
                     <div className="min-h-[40vh] flex flex-col items-center justify-center gap-3">
@@ -159,28 +143,24 @@ export default function AllFacilityPage() {
                                         fill
                                         className="object-cover"
                                     />
-
                                     <span className="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
                                         {facility.type || "Sports Arena"}
                                     </span>
                                 </div>
-
                                 {/* Content */}
-                                <div className="p-6 flex-grow flex flex-col justify-between">
+                                <div className="p-6 grow flex flex-col justify-between">
                                     <div>
                                         <div className="flex justify-between items-start gap-2 mb-2">
                                             <h3 className="font-extrabold text-xl text-[#071B34] line-clamp-1">{facility.name}</h3>
-                                            <span className="text-orange-600 font-black text-sm flex-shrink-0">
+                                            <span className="text-orange-600 font-black text-sm shrink-0">
                                                 ৳{facility.price_per_hour}/hr
                                             </span>
                                         </div>
-
                                         <div className="flex items-center text-gray-500 text-sm">
-                                            <CiLocationOn size={16} className="mr-1 text-orange-600 flex-shrink-0" />
+                                            <CiLocationOn size={16} className="mr-1 text-orange-600 shrink-0" />
                                             <span className="line-clamp-1">{facility.location}</span>
                                         </div>
                                     </div>
-
                                     <button className="w-full mt-6 bg-[#071B34] hover:bg-orange-500 text-white py-3.5 rounded-xl font-bold transition duration-200 shadow-sm cursor-pointer text-xs uppercase tracking-wider">
                                         <Link href={`/all-facilities/${facility._id}`} className="block w-full h-full text-center">
                                             Book Now
@@ -191,7 +171,6 @@ export default function AllFacilityPage() {
                         ))}
                     </div>
                 )}
-
             </div>
         </div>
     );

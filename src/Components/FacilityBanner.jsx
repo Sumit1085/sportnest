@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 export default function FacilityBanner({ facility }) {
     return (
         <section className="relative h-[300px] md:h-[450px] w-full mb-12 overflow-hidden rounded-2xl shadow-lg">

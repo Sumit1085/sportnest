@@ -1,51 +1,41 @@
 'use client';
-
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
 export default function FacilityBookingForm({ facility }) {
     const { data: session } = authClient.useSession();
     const user = session?.user;
     const router = useRouter();
-
     const [bookingDate, setBookingDate] = useState("");
     const [timeSlot, setTimeSlot] = useState(facility.available_slots?.[0] || "");
     const [hours, setHours] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
     const pricePerHour = parseFloat(facility.price_per_hour || 0);
     const subtotal = pricePerHour * hours;
     const serviceFee = subtotal * 0.1; // 10% booking service fee
     const total = subtotal + serviceFee;
-
     const handleConfirmBooking = async (e) => {
         e.preventDefault();
-
         // 1. Authenticate check
         if (!user) {
             toast.error("Please login to book a facility!");
             router.push(`/login?callback=/all-facilities/${facility._id}`);
             return;
         }
-
         // 2. Form validation
         if (!bookingDate) {
             toast.error("Please select a booking date!");
             return;
         }
-
         if (!timeSlot) {
             toast.error("Please select a time slot!");
             return;
         }
-
         if (hours <= 0) {
             toast.error("Hours must be greater than 0!");
             return;
         }
-
         try {
             setIsSubmitting(true);
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -66,11 +56,9 @@ export default function FacilityBookingForm({ facility }) {
                     user_name: user.name
                 }),
             });
-
             if (!response.ok) {
                 throw new Error("Failed to create booking");
             }
-
             const result = await response.json();
             toast.success("Booking placed successfully! Redirecting...");
             
@@ -83,25 +71,20 @@ export default function FacilityBookingForm({ facility }) {
             setIsSubmitting(false);
         }
     };
-
     return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
-
             {/* HEADER */}
             <div className="bg-[#071B34] text-white p-6">
                 <div className="text-sm text-gray-300">Starts from</div>
                 <div className="text-3xl font-bold text-orange-500">
                     ৳{pricePerHour} / hr
                 </div>
-
                 <div className="text-sm mt-2 text-gray-200">
                     👥 Capacity: <span className="font-semibold text-white">{facility.capacity || 0} players</span>
                 </div>
             </div>
-
             {/* FORM */}
             <form className="p-6 space-y-4" onSubmit={handleConfirmBooking}>
-
                 <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
                         Select Date
@@ -114,7 +97,6 @@ export default function FacilityBookingForm({ facility }) {
                         className="w-full border border-gray-200 p-3 rounded-lg text-black focus:border-orange-500 outline-none" 
                     />
                 </div>
-
                 <div className="grid grid-cols-2 gap-3">
                     <div>
                         <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
@@ -134,7 +116,6 @@ export default function FacilityBookingForm({ facility }) {
                             )}
                         </select>
                     </div>
-
                     <div>
                         <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">
                             Hours
@@ -150,7 +131,6 @@ export default function FacilityBookingForm({ facility }) {
                         />
                     </div>
                 </div>
-
                 {/* Price Breakdown */}
                 <div className="border-t border-gray-100 pt-4 text-sm space-y-2 text-gray-600">
                     <div className="flex justify-between">
@@ -166,7 +146,6 @@ export default function FacilityBookingForm({ facility }) {
                         <span className="text-orange-600">৳{total.toFixed(2)}</span>
                     </div>
                 </div>
-
                 <button 
                     type="submit"
                     disabled={isSubmitting}
@@ -174,7 +153,6 @@ export default function FacilityBookingForm({ facility }) {
                 >
                     {isSubmitting ? "Processing..." : "Confirm Booking"}
                 </button>
-
                 <p className="text-center text-xs text-gray-400">
                     Secure checkout. Status is pending until confirmation.
                 </p>

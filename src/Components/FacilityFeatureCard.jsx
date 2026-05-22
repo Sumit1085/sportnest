@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CiLocationOn } from "react-icons/ci";
-
 const FacilityFeatureCard = async () => {
   let limitedDatas = [];
   try {
@@ -14,7 +13,6 @@ const FacilityFeatureCard = async () => {
   } catch (error) {
     console.error("Error fetching featured facilities:", error);
   }
-
   if (limitedDatas.length === 0) {
     return (
       <div className="text-center py-12 w-full bg-white rounded-3xl border border-gray-100">
@@ -22,7 +20,6 @@ const FacilityFeatureCard = async () => {
       </div>
     );
   }
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 my-10 w-full" >
       {limitedDatas.map((data) => (
@@ -38,12 +35,10 @@ const FacilityFeatureCard = async () => {
               fill
               className="object-cover"
             />
-
             <span className="absolute top-4 left-4 bg-orange-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
               {data.type || "Sports Arena"}
             </span>
           </div>
-
           {/* Content */}
           <div className="p-6 flex-grow flex flex-col justify-between">
             <div>
@@ -53,13 +48,11 @@ const FacilityFeatureCard = async () => {
                   ৳{data.price_per_hour}/hr
                 </span>
               </div>
-
               <div className="flex items-center text-gray-500 text-sm">
                 <CiLocationOn size={16} className="mr-1 text-orange-600 flex-shrink-0" />
                 <span className="line-clamp-1">{data.location}</span>
               </div>
             </div>
-
             <button className="w-full mt-6 bg-[#071B34] text-white py-3.5 rounded-xl font-bold hover:bg-orange-500 transition duration-200 shadow-sm cursor-pointer text-xs uppercase tracking-wider">
               <Link href={`/all-facilities/${data._id}`} className="block w-full h-full text-center">
                 Book Now
@@ -71,5 +64,4 @@ const FacilityFeatureCard = async () => {
     </div>
   );
 };
-
 export default FacilityFeatureCard;

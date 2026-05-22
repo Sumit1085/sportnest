@@ -20,7 +20,7 @@ export default function NotFound() {
                 </h2>
                 
                 <p className="text-gray-500 text-sm mt-3 leading-relaxed">
-                    Oops! The page you are looking for has been kicked out of play or doesn't exist in our stadium. Let's get you back on the field.
+                    Oops! The page you are looking for has been kicked out of play or doesnt exist in our stadium. Lets get you back on the field.
                 </p>
 
                 <Link href="/" className="mt-8 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3.5 rounded-2xl transition duration-200 shadow-md shadow-orange-500/10 flex items-center gap-2 text-sm select-none cursor-pointer">
