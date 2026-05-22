@@ -28,21 +28,29 @@ const Header = () => {
 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-                    <Link href="/" className="text-orange-500 border-b-2 border-orange-500 pb-1">
+                    <Link href="/" className="hover:text-orange-500 transition">
                         Home
                     </Link>
 
-                    <Link href="/all-facilities" className="hover:text-orange-500">
+                    <Link href="/all-facilities" className="hover:text-orange-500 transition">
                         All Facilities
                     </Link>
 
-                    <Link href="#" className="hover:text-orange-500">
-                        My Bookings
-                    </Link>
+                    {user && (
+                        <>
+                            <Link href="/my-bookings" className="hover:text-orange-500 transition">
+                                My Bookings
+                            </Link>
 
-                    <Link href="#" className="hover:text-orange-500">
-                        Manage Facilities
-                    </Link>
+                            <Link href="/add-facility" className="hover:text-orange-500 transition">
+                                Add Facility
+                            </Link>
+
+                            <Link href="/manage-facilities" className="hover:text-orange-500 transition">
+                                Manage My Facilities
+                            </Link>
+                        </>
+                    )}
                 </div>
 
                 {/* Right Side Desktop */}
@@ -62,37 +70,33 @@ const Header = () => {
 
                             <Dropdown.Popover>
                                 <div className="px-3 pt-3 pb-1">
-                                    <p className="font-medium">{user.name}</p>
+                                    <p className="font-medium text-black">{user.name}</p>
                                     <p className="text-xs text-gray-500">{user.email}</p>
                                 </div>
 
                                 <Dropdown.Menu>
 
                                     <Dropdown.Item>
-                                        <Label>Dashboard</Label>
+                                        <Link href="/my-bookings" className="w-full text-left block text-sm text-gray-700">
+                                            My Bookings
+                                        </Link>
                                     </Dropdown.Item>
 
                                     <Dropdown.Item>
-                                        <Label>Profile</Label>
+                                        <Link href="/add-facility" className="w-full text-left block text-sm text-gray-700">
+                                            Add Facility
+                                        </Link>
                                     </Dropdown.Item>
 
                                     <Dropdown.Item>
-                                        <div className="flex justify-between w-full">
-                                            <Label>Settings</Label>
-                                            <Gear className="size-3.5" />
-                                        </div>
-                                    </Dropdown.Item>
-
-                                    <Dropdown.Item>
-                                        <div className="flex justify-between w-full">
-                                            <Label>Create Team</Label>
-                                            <Persons className="size-3.5" />
-                                        </div>
+                                        <Link href="/manage-facilities" className="w-full text-left block text-sm text-gray-700">
+                                            Manage My Facilities
+                                        </Link>
                                     </Dropdown.Item>
 
                                     <Dropdown.Item variant="danger" onClick={handleLogout}>
-                                        <div className="flex justify-between w-full">
-                                            <Label>Logout</Label>
+                                        <div className="flex justify-between w-full text-left text-sm text-red-600">
+                                            <span>Logout</span>
                                             <ArrowRightFromSquare className="size-3.5" />
                                         </div>
                                     </Dropdown.Item>
@@ -103,13 +107,13 @@ const Header = () => {
                     ) : (
                         <>
                             <Link href="/login">
-                                <button className="bg-orange-500 text-white px-5 py-2 rounded-md">
+                                <button className="bg-orange-500 text-white px-5 py-2 rounded-md hover:bg-orange-600 cursor-pointer">
                                     Login
                                 </button>
                             </Link>
 
                             <Link href="/register">
-                                <button className="border border-orange-500 text-orange-500 px-5 py-2 rounded-md">
+                                <button className="border border-orange-500 text-orange-500 px-5 py-2 rounded-md hover:bg-orange-50 cursor-pointer">
                                     Register
                                 </button>
                             </Link>
@@ -120,7 +124,7 @@ const Header = () => {
 
                 {/* Mobile Menu Button */}
                 <button
-                    className="md:hidden text-2xl"
+                    className="md:hidden text-2xl text-black"
                     onClick={() => setMenuOpen(!menuOpen)}
                 >
                     <Bars/>
@@ -132,41 +136,52 @@ const Header = () => {
             {menuOpen && (
                 <div className="md:hidden px-5 pb-4 flex flex-col gap-4 text-sm font-medium border-t">
 
-                    <Link href="/" onClick={() => setMenuOpen(false)}>
+                    <Link href="/" onClick={() => setMenuOpen(false)} className="text-gray-800 hover:text-orange-500">
                         Home
                     </Link>
 
-                    <Link href="/all-facilities" onClick={() => setMenuOpen(false)}>
+                    <Link href="/all-facilities" onClick={() => setMenuOpen(false)} className="text-gray-800 hover:text-orange-500">
                         All Facilities
                     </Link>
 
-                    <Link href="/my-bookings" onClick={() => setMenuOpen(false)}>
-                        My Bookings
-                    </Link>
+                    {user && (
+                        <>
+                            <Link href="/my-bookings" onClick={() => setMenuOpen(false)} className="text-gray-800 hover:text-orange-500">
+                                My Bookings
+                            </Link>
 
-                    <Link href="/manage-facilities" onClick={() => setMenuOpen(false)}>
-                        Manage Facilities
-                    </Link>
+                            <Link href="/add-facility" onClick={() => setMenuOpen(false)} className="text-gray-800 hover:text-orange-500">
+                                Add Facility
+                            </Link>
+
+                            <Link href="/manage-facilities" onClick={() => setMenuOpen(false)} className="text-gray-800 hover:text-orange-500">
+                                Manage Facilities
+                            </Link>
+                        </>
+                    )}
 
                     <div className="flex gap-3 pt-2">
 
                         {isPending? <Spinner color="current" size="sm" />: user ? (
                             <button
-                                onClick={handleLogout}
-                                className="bg-red-500 text-white px-4 py-2 rounded-md w-full"
+                                onClick={() => {
+                                    handleLogout();
+                                    setMenuOpen(false);
+                                }}
+                                className="bg-red-500 text-white px-4 py-2 rounded-md w-full cursor-pointer"
                             >
                                 Logout
                             </button>
                         ) : (
                             <>
-                                <Link href="/login" className="w-full">
-                                    <button className="bg-orange-500 text-white px-4 py-2 rounded-md w-full">
+                                <Link href="/login" className="w-full" onClick={() => setMenuOpen(false)}>
+                                    <button className="bg-orange-500 text-white px-4 py-2 rounded-md w-full cursor-pointer">
                                         Login
                                     </button>
                                 </Link>
 
-                                <Link href="/register" className="w-full">
-                                    <button className="border border-orange-500 text-orange-500 px-4 py-2 rounded-md w-full">
+                                <Link href="/register" className="w-full" onClick={() => setMenuOpen(false)}>
+                                    <button className="border border-orange-500 text-orange-500 px-4 py-2 rounded-md w-full cursor-pointer">
                                         Register
                                     </button>
                                 </Link>
