@@ -1,17 +1,12 @@
-import { headers } from "next/headers";
-
 import FacilityBanner from "@/Components/FacilityBanner";
 import FacilityBookingForm from "@/Components/FacilityBookingForm";
 import FacilityDetails from "@/Components/FacilityDetails";
-import { auth } from "@/lib/auth";
 
 const singleFacility = async (id) => {
-
-    
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const res = await fetch(
-        `${process.env.BETTER_AUTH_URL}/facility/${id}`,
+        `${apiUrl}/facility/${id}`,
         {
-            headers,
             cache: "no-store"
         }
     );
