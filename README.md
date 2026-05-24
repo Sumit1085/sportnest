@@ -3,7 +3,7 @@
 SportNest is a premium, state-of-the-art full-stack Sports Facility Booking Platform designed for modern athletes and sports enthusiasts. Built using the MERN stack (Next.js, Express, MongoDB) and integrated with Better Auth for secure, seamless session management, SportNest offers a frictionless booking experience from court search to checkout.
 
 ## 🔗 Live Application URL
-* **Live Deployment**: [https://sportnest-booking.vercel.app](https://sportnest-booking.vercel.app) *(Temporary Demo Link)*
+* **Live Deployment**: [https://sportnest-three.vercel.app/](https://sportnest-three.vercel.app/)
 
 ---
 
