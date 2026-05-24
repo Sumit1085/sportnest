@@ -1,6 +1,5 @@
 import Image from "next/image";
 import coverImg from '../../public/Container.png'
-import Header from "@/Components/Header";
 import FacilityFeatureCard from "@/Components/FacilityFeatureCard";
 import Testimonial from "@/Components/Testimonial";
 import ChooseUs from "@/Components/ChooseUs";

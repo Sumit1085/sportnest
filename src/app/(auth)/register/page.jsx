@@ -21,13 +21,13 @@ import toast from "react-hot-toast";
 export default function RegisterPage() {
 
     const router = useRouter()
-    
-    const handleRegister = async(e) => {
+
+    const handleRegister = async (e) => {
         e.preventDefault()
 
         const formData = new FormData(e.currentTarget)
         const registerData = Object.fromEntries(formData.entries())
-        const {Name, Email, Password, imageURL} = registerData
+        const { Name, Email, Password, imageURL } = registerData
 
         if (!Name || !Email || !Password) {
             toast.error('Please fill in all required fields.')
@@ -74,8 +74,7 @@ export default function RegisterPage() {
         try {
             await authClient.signIn.social({
                 provider: "google",
-                callbackURL: "/"
-            })
+            });
         } catch (err) {
             console.error(err)
             toast.error('Google signup failed')

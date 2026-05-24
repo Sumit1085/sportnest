@@ -34,29 +34,19 @@ export default function AllFacilityPage() {
     }, []);
     // Handle searching, filtering, and sorting
     useEffect(() => {
-        let result = [...facilities];
-        // 1. Search filter
-        if (searchTerm.trim() !== "") {
-            const query = searchTerm.toLowerCase();
-            result = result.filter(
-                f => f.name.toLowerCase().includes(query) || 
-                     f.location.toLowerCase().includes(query)
-            );
-        }
-        // 2. Type filter
-        if (selectedType !== "All") {
-            result = result.filter(f => f.type === selectedType);
-        }
-        // 3. Sorting
-        if (sortBy === "price-low") {
-            result.sort((a, b) => parseFloat(a.price_per_hour) - parseFloat(b.price_per_hour));
-        } else if (sortBy === "price-high") {
-            result.sort((a, b) => parseFloat(b.price_per_hour) - parseFloat(a.price_per_hour));
-        } else if (sortBy === "capacity") {
-            result.sort((a, b) => parseInt(b.capacity) - parseInt(a.capacity));
-        }
-        // setFilteredFacilities(result);
-    }, [searchTerm, selectedType, sortBy, facilities]);
+    let result = [...facilities];
+
+    // 1. Search filter
+    if (searchTerm.trim() !== "") {
+        const query = searchTerm.toLowerCase();
+        result = result.filter(
+            f => f.name.toLowerCase().includes(query) ||
+                 f.location.toLowerCase().includes(query)
+        );
+    }
+
+    setFilteredFacilities(result);
+}, [facilities, searchTerm]);
     const facilityTypes = ["All", "Football Turf", "Badminton Court", "Swimming Lane", "Tennis Court", "Basketball Court", "Cricket Net"];
     return (
         <div className="min-h-screen bg-[#F4F4F7] px-4 md:px-8 py-12">
@@ -86,7 +76,7 @@ export default function AllFacilityPage() {
                         />
                     </div>
                     {/* Filter Type */}
-                    <div className="flex flex-col sm:flex-row gap-4 shrink-0">
+                    {/* <div className="flex flex-col sm:flex-row gap-4 shrink-0">
                         <div className="relative">
                             <select
                                 value={selectedType}
@@ -99,7 +89,7 @@ export default function AllFacilityPage() {
                             </select>
                             <MdOutlineSports className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none" />
                         </div>
-                        {/* Sort */}
+                        Sort
                         <div className="relative">
                             <select
                                 value={sortBy}
@@ -113,7 +103,7 @@ export default function AllFacilityPage() {
                             </select>
                             <MdAttachMoney className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg pointer-events-none" />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {/* Facilities Grid */}
                 {isLoading ? (

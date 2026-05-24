@@ -79,7 +79,7 @@ export default function AddFacilityPage() {
 
         try {
             setIsSubmitting(true);
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             
             const response = await fetch(`${apiUrl}/facility`, {
                 method: "POST",

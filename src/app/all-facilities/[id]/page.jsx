@@ -20,7 +20,7 @@ const singleFacility = async (id) => {
 
 const FacilityDetailsPage = async ({ params }) => {
 
-    const { id } = params;
+    const { id } = await params;
 
   
 

@@ -9,6 +9,7 @@ const FacilityFeatureCard = async () => {
     if (res.ok) {
       const datas = await res.json();
       limitedDatas = datas.slice(0, 6);
+      console.log(limitedDatas)
     }
   } catch (error) {
     console.error("Error fetching featured facilities:", error);
